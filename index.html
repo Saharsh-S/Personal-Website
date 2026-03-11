@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saharsh Sukumar — CS Student & Software Engineer</title>
+<meta name="description" content="Computer Science student at McMaster University passionate about Software Engineering, AI/ML, and building things that matter.">
+<meta name="keywords" content="Saharsh Sukumar, Computer Science, McMaster, Software Engineering, AI, Machine Learning, Portfolio">
+<meta name="author" content="Saharsh Sukumar">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Saharsh Sukumar — CS Student & Software Engineer">
+<meta property="og:description" content="CS student at McMaster. Building things with Python, C, and a lot of coffee.">
+<meta property="og:type" content="website">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Bricolage+Grotesque:wght@400;600;700;800&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- Styles -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor">
+  <div id="cursor-ring"></div>
+  <div id="cursor-dot"></div>
+</div>
+
+<!-- Animated Particle Background -->
+<canvas id="canvas-bg"></canvas>
+
+<!-- Scroll Progress Bar -->
+<div id="scroll-progress"></div>
+
+<!-- Toast Notification -->
+<div id="toast"></div>
+
+<!-- ============================================================
+     COMMAND PALETTE  (open with Cmd/Ctrl + K)
+     ============================================================ -->
+<div id="cmd-palette">
+  <div class="cmd-box">
+    <div class="cmd-input-wrap">
+      <span class="cmd-prefix">›</span>
+      <input class="cmd-input" id="cmd-input" placeholder="Type a command or search..." autocomplete="off">
+    </div>
+    <div class="cmd-results" id="cmd-results"></div>
+    <div class="cmd-hint">
+      <span>↑↓ navigate</span>
+      <span>↵ select</span>
+      <span>esc close</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     RECRUITER QUICK-VIEW MODAL
+     ============================================================ -->
+<div id="recruiter-modal">
+  <div class="recruiter-card">
+    <div class="recruiter-header">
+      <div class="recruiter-title">⚡ Recruiter Quick View</div>
+      <button class="recruiter-close" onclick="closeRecruiter()">✕</button>
+    </div>
+
+    <div class="r-section">
+      <h4>At a Glance</h4>
+      <div class="r-grid">
+        <div class="r-item"><div class="r-item-label">Name</div><div class="r-item-val">Saharsh Sukumar</div></div>
+        <div class="r-item"><div class="r-item-label">Program</div><div class="r-item-val">CS @ McMaster</div></div>
+        <div class="r-item"><div class="r-item-label">Available</div><div class="r-item-val">Summer 2026 Internship</div></div>
+        <div class="r-item"><div class="r-item-label">Location</div><div class="r-item-val">Toronto, ON (Open to Remote)</div></div>
+      </div>
+    </div>
+
+    <div class="r-section">
+      <h4>Top Skills</h4>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <span class="chip">Python</span>
+        <span class="chip">HTML/CSS</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">C</span>
+        <span class="chip">Haskell</span>
+        <span class="chip">Java</span>
+        <span class="chip">Git</span>
+      </div>
+    </div>
+
+    <div class="r-section">
+      <h4>Key Projects</h4>
+      <div class="r-grid">
+        <div class="r-item"><div class="r-item-label">AI/ML</div><div class="r-item-val">RGB Color Match</div></div>
+        <div class="r-item"><div class="r-item-label">Web App</div><div class="r-item-val">Algorithm Visualizer</div></div>
+      </div>
+    </div>
+
+    <div class="r-section">
+      <h4>Looking For</h4>
+      <div class="r-grid">
+        <div class="r-item"><div class="r-item-label">Role Types</div><div class="r-item-val">SWE / AI-ML Intern</div></div>
+        <div class="r-item"><div class="r-item-label">Term</div><div class="r-item-val">4/8/12 months</div></div>
+      </div>
+    </div>
+
+    <a href="#contact" class="btn-primary" style="width:100%;justify-content:center" onclick="closeRecruiter()">
+      Get In Touch →
+    </a>
+  </div>
+</div>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">SS<span>_dev</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-theme" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    <button class="btn-theme" onclick="openCmd()" title="Command palette (⌘K)">⌘K</button>
+    <a class="btn-recruiter" href="#" onclick="openRecruiter(); return false;">⚡ Recruiter Mode</a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     01 — HERO
+     ============================================================ -->
+<section id="hero">
+  <div class="hero-grid">
+    <!-- Left: text -->
+    <div class="hero-content">
+      <div class="hero-eyebrow">Available for Summer 2026</div>
+      <h1 class="hero-name">
+        <span class="line1">Saharsh</span>
+        <span class="line2">Sukumar.</span>
+      </h1>
+      <p class="hero-tagline">
+        Computer Science Student @ McMaster University<br>
+        Building things with <span class="typed-text" id="typed"></span>
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">View Projects →</a>
+        <a href="https://docs.google.com/document/d/1Fa2pnSdd_PtIeFdOMQlTAI7cmPalbgep/edit?usp=sharing&rtpof=true&sd=true" class="btn-secondary" target="_blank">📄 Resume</a>
+        <a href="#contact" class="btn-secondary">Contact Me</a>
+      </div>
+    </div>
+
+    <!-- Right: terminal -->
+    <div class="hero-visual">
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <span class="terminal-dot td-red"></span>
+          <span class="terminal-dot td-yellow"></span>
+          <span class="terminal-dot td-green"></span>
+          <span class="terminal-title">Saharsh@macbook ~ zsh</span>
+        </div>
+        <div class="terminal-body">
+          <span class="t-line"><span class="t-prompt">→ ~</span> <span class="t-cmd">whoami</span></span>
+          <span class="t-line t-output">Saharsh Sukumar — CS Student &amp; Builder</span>
+          <span class="t-line" style="margin-top:0.5rem"><span class="t-prompt">→ ~</span> <span class="t-cmd">cat about.json</span></span>
+          <span class="t-line t-output">{</span>
+          <span class="t-line t-output">&nbsp;&nbsp;<span class="t-key">"university"</span>: <span class="t-val">"McMaster"</span>,</span>
+          <span class="t-line t-output">&nbsp;&nbsp;<span class="t-key">"program"</span>: <span class="t-val">"Honours CS"</span>,</span>
+          <span class="t-line t-output">&nbsp;&nbsp;<span class="t-key">"year"</span>: <span class="t-val">1</span>,</span>
+          <span class="t-line t-output">&nbsp;&nbsp;<span class="t-key">"interests"</span>: [<span class="t-val">"AI/ML"</span>, <span class="t-val">"SWE"</span>, <span class="t-val">"Open Source"</span>],</span>
+          <span class="t-line t-output">&nbsp;&nbsp;<span class="t-key">"coffee_per_day"</span>: <span class="t-val">3</span></span>
+          <span class="t-line t-output">}</span>
+          <span class="t-line" style="margin-top:0.5rem"><span class="t-prompt">→ ~</span> <span class="t-cmd">git log --oneline -3</span></span>
+          <span class="t-line t-output"><span style="color:#e8a435">a3f9d12</span> feat: add neural net classifier</span>
+          <span class="t-line t-output"><span style="color:#e8a435">b71c4e8</span> fix: optimize sorting algorithm</span>
+          <span class="t-line t-output"><span style="color:#e8a435">c92a1bb</span> docs: update README</span>
+          <span class="t-line" style="margin-top:0.5rem"><span class="t-prompt">→ ~</span> <span class="t-cursor"></span></span>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-chip"><div class="stat-num">5+</div><div class="stat-label">Projects</div></div>
+        <div class="stat-chip"><div class="stat-num">7+</div><div class="stat-label">Languages</div></div>
+        <div class="stat-chip"><div class="stat-num">500+</div><div class="stat-label">Commits</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     02 — ABOUT
+     ============================================================ -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="section-label">01 — About</div>
+    <div class="about-grid">
+      <div class="about-photo-wrap fade-up">
+        <div class="about-photo">🧑‍💻</div>
+        <!-- Replace emoji above with an <img> tag pointing to your actual photo -->
+        <div class="about-badge"> <img src="Screenshot_2025-12-29_at_8.49.48_PM-removebg-preview.png"> McMaster CS<br>Year 1 · 2024–25</div>
+      </div>
+      <div class="about-text fade-up">
+        <h2 class="section-title">Building the future,<br>one commit at a time.</h2>
+        <p>Hey! I'm Saharsh, a first-year Computer Science student at McMaster University that wants to show that drive matters more than prestiege. </p>
+        <p>I would like to get into the fintech industry and eventually break into quant. Right now I’m building a few projects around data, markets, and systems that I find interesting. 
+          If any of this sounds interesting to you and you’d like to contribute or collaborate, feel free to reach out.
+        </p>
+        <div class="fun-facts">
+          <div class="fact-chip"><span class="icon">☕</span> 3 coffees/day minimum</div>
+          <div class="fact-chip"><span class="icon">🚀</span> Side project demon</div>
+          <div class="fact-chip"><span class="icon">🏊</span> Competitive swimmer</div>
+          <div class="fact-chip"><span class="icon">🌐</span> Open source contributor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     03 — SKILLS
+     ============================================================ -->
+<section id="skills">
+  <div class="section-wrap">
+    <div class="section-label">02 — Skills</div>
+    <h2 class="section-title">Technical Arsenal</h2>
+    <div class="skills-categories">
+
+      <!-- Languages -->
+      <div class="skill-cat fade-up">
+        <div class="skill-cat-title">🐍 Languages</div>
+        <div class="skill-items">
+          <div class="skill-item">
+            <div class="skill-row"><span class="skill-name">Python</span><span class="skill-pct">88%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-row"><span class="skill-name">JavaScript</span><span class="skill-pct">80%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-row"><span class="skill-name">C</span><span class="skill-pct">72%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="72"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-row"><span class="skill-name">TypeScript</span><span class="skill-pct">65%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-row"><span class="skill-name">SQL</span><span class="skill-pct">70%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Tools -->
+      <div class="skill-cat fade-up">
+        <div class="skill-cat-title">🛠️ Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Git / GitHub</span>
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">Windows</span>
+          <span class="skill-tag">Mac</span>
+          <span class="skill-tag">Jupyter</span>
+          <span class="skill-tag">Vercel</span>
+        </div>
+      </div>
+
+    
+
+      <!-- CS Fundamentals -->
+      <div class="skill-cat fade-up">
+        <div class="skill-cat-title">🧠 CS Fundamentals</div>
+        <div class="skill-items">
+          <div class="skill-item">
+            <div class="skill-row"><span class="skill-name">Data Structures</span><span class="skill-pct">85%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-row"><span class="skill-name">Algorithms</span><span class="skill-pct">80%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-row"><span class="skill-name">OOP / Design Patterns</span><span class="skill-pct">75%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     04 — PROJECTS
+     ============================================================ -->
+<section id="projects">
+  <div class="section-wrap">
+    <div class="section-label">03 — Projects</div>
+    <h2 class="section-title">Things I've Built</h2>
+    <div class="projects-grid" id="projects-grid">
+
+
+      <div class="project-card fade-up" data-category="web">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0d1a10,#081208)">
+          <span class="proj-emoji">📊</span>
+          <div class="proj-difficulty" title="Difficulty">⭐⭐⭐</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags"><span class="proj-tag">React</span><span class="proj-tag">D3.js</span><span class="proj-tag">Node.js</span></div>
+          <div class="proj-title">Algorithm Visualizer</div>
+          <div class="proj-desc">Interactive web app that visualizes 10+ sorting and pathfinding algorithms in real time with speed controls and step-by-step mode.</div>
+          <div class="proj-links">
+            <a href="#" class="proj-link github">⌥ GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card fade-up" data-category="game">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#1a0d06,#120804)">
+          <span class="proj-emoji">🎮</span>
+          <div class="proj-difficulty" title="Difficulty">⭐⭐</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags"><span class="proj-tag">JavaScript</span><span class="proj-tag">Canvas API</span><span class="proj-tag">CSS</span></div>
+          <div class="proj-title">RGB Color Match Game</div>
+          <div class="proj-desc">Browser-based game where players match RGB values with sliders. Tracks scores, timing, difficulty levels. 200+ plays in first week.</div>
+          <div class="proj-links">
+            <a href="#" class="proj-link demo">Play Game</a>
+            <a href="#" class="proj-link github">⌥ GitHub</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card fade-up" data-category="web">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0d1a10,#081208)">
+          <span class="proj-emoji">🤫</span>
+          <div class="proj-difficulty" title="Difficulty">⭐⭐⭐⭐</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-tags"><span class="proj-tag">C</span><span class="proj-tag">HPC Optimization</span></div>
+          <div class="proj-title">Top Secret</div>
+          <div class="proj-desc">I’m currently working on a project exploring data, systems, and financial models. The goal is to experiment with ideas 
+            in fintech and quant concepts. If you’d like to contribute or collaborate, feel free to reach out.
+</div>
+          <div class="proj-links">
+            <a href="#" class="proj-link github">⌥ GitHub</a>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     05 — ALGORITHM VISUALIZER (live demo)
+     ============================================================ -->
+<section id="visualizer">
+  <div class="section-wrap">
+    <div class="section-label">04 — Live Demo</div>
+    <h2 class="section-title">Sorting Algorithm Visualizer</h2>
+    <div class="viz-wrap fade-up">
+      <div class="viz-header">
+        <div class="viz-title">// <span>interactive demo</span> — run it live</div>
+        <div class="viz-controls">
+          <button class="viz-btn active" data-algo="bubble"    onclick="setAlgo('bubble',this)">Bubble Sort</button>
+          <button class="viz-btn"         data-algo="selection" onclick="setAlgo('selection',this)">Selection Sort</button>
+          <button class="viz-btn"         data-algo="insertion" onclick="setAlgo('insertion',this)">Insertion Sort</button>
+          <button class="viz-btn"         data-algo="merge"     onclick="setAlgo('merge',this)">Merge Sort</button>
+          <button class="viz-btn run"   onclick="runSort()">▶ Run</button>
+          <button class="viz-btn reset" onclick="resetViz()">↺ Reset</button>
+        </div>
+      </div>
+      <div class="viz-stage" id="viz-stage"></div>
+      <div class="viz-info">
+        <div class="viz-stat">Comparisons: <span id="viz-comps">0</span></div>
+        <div class="viz-stat">Swaps: <span id="viz-swaps">0</span></div>
+        <div class="viz-stat">Time: <span id="viz-time">0ms</span></div>
+        <div class="viz-stat">Algorithm: <span id="viz-algo">Bubble Sort</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     06 — EXPERIENCE
+     ============================================================ -->
+<section id="experience">
+  <div class="section-wrap">
+    <div class="section-label">05 — Experience</div>
+    <h2 class="section-title">Where I've Been</h2>
+    <div class="timeline">
+
+      <div class="timeline-item fade-up">
+        <div class="timeline-dot">🔎</div>
+        <div class="timeline-header">
+          <div class="timeline-role">Secret HPC Optimization Porject</div>
+          <div class="timeline-date">Feb 2026 - current</div>
+        </div>
+        <div class="timeline-org">Solo Contributor</div>
+        <div class="timeline-org">McMaster University · Hamilton, ON</div>
+        <div class="timeline-desc"><p> The goal is to experiment with ideas in fintech and quant concepts. (more info will be presented)</p></div>
+        <div class="timeline-chips">
+          <span class="chip">C</span><span class="chip">TensorFlow</span>
+          <span class="chip">GPT-4 API</span>
+        </div>
+      </div>
+
+      <div class="timeline-item fade-up">
+        <div class="timeline-dot">📊</div>
+        <div class="timeline-header">
+          <div class="timeline-role">Event Management Dashboard</div>
+          <div class="timeline-date">Oct 2025 – Present</div>
+        </div>
+        <div class="timeline-org">McMaster CS Society · Hamilton, ON</div>
+        <div class="timeline-org">Team Lead</div>        
+        <div class="timeline-desc">Built a React and TailwindCSS dashboard with Chart.js charts visualizing 5+ event metrics including RSVPs, attendance, and engagement. </div>
+        <div class="timeline-desc">Implemented a Node.js & MongoDB backend managing event/RSVP data for 50+ student participants. </div>
+        <div class="timeline-chips">
+          <span class="chip">JS</span><span class="chip">PHP</span><span class="chip">SQL</span>
+        </div>
+      </div>
+
+      <div class="timeline-item fade-up">
+        <div class="timeline-dot">💻</div>
+        <div class="timeline-header">
+          <div class="timeline-role">Children’s RGB Color Match Game</div>
+          <div class="timeline-date">Jan 2026 – Feb 2026</div>
+        </div>
+        <div class="timeline-org">Hamilton, ON</div>
+        <div class="timeline-org">Solo Contributor</div>
+        <div class="timeline-desc">Developed a mobile-responsive RGB color recognition game using HTML, CSS, and JavaScript featuring 10 timed rounds and dynamic score tracking.</div>
+        <div class="timeline-desc">DOM-driven UI with event listeners supporting real-time scoring and replay functionality across 10 game rounds.</div>
+        <div class="timeline-chips">
+          <span class="chip">HTML/CSS</span><span class="chip">JS</span>
+        </div>
+      </div>
+
+      <div class="timeline-item fade-up">
+        <div class="timeline-dot">🤝</div>
+        <div class="timeline-header">
+          <div class="timeline-role">Open Source Project (YC W20)</div>
+          <div class="timeline-date">Aden Hive (YC W20) · Feb 2025 – Present</div>
+        </div>
+        <div class="timeline-org">San Francisco, California</div>
+        <div class="timeline-desc">Developed and enhanced an open-source AI framework, implementing adaptive multi-agent workflows and human-in-the-loop nodes for autonomous, self-improving agents.</div>
+        <div class="timeline-desc">Collaborated with the community by contributing tools, templates, and integrations, improving agent reliability, observability, and goal-driven automation.</div>        
+        <div class="timeline-chips">
+          <span class="chip">Machine Learning</span><span class="chip">AI</span><span class="chip">MultiAgentSystems</span><span class="chip">AgentFrameworks</span>
+        </div>
+      </div>
+      
+      <div class="timeline-item fade-up">
+        <div class="timeline-dot">🤝</div>
+        <div class="timeline-header">
+          <div class="timeline-role">Full Stack Developor </div>
+          <div class="timeline-date">Fiducia · July 2021 – Aug 2021</div>
+        </div>
+        <div class="timeline-org">San Francisco, California</div>
+        <div class="timeline-desc">Engineered an Angular dashboard aggregating 3+ backend metrics (API response time, CPU utilization, system logs), enabling engineers to diagnose performance issues ~35% faster.</div>
+        <div class="timeline-desc">Integrated a QR-code system linking 3D models to physical assets, enabling mobile access to 10+ interactive digital models.</div>        
+        <div class="timeline-chips">
+          <span class="chip">Angular</span><span class="chip">API</span><span class="chip">Augmented Reality</span><span class="chip">Web Development</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     07 — EDUCATION
+     ============================================================ -->
+<section id="education" style="background:var(--bg)">
+  <div class="section-wrap">
+    <div class="section-label">06 — Education</div>
+    <h2 class="section-title">Academic Background</h2>
+    <div class="edu-card fade-up">
+      <div class="edu-main">
+        <div style="font-size:3rem;margin-bottom:1rem">🎓</div>
+        <div class="school-name">McMaster University</div>
+        <div class="degree">Honours Bachelor of Computer Science</div>
+        <div class="years" style="margin-bottom:1.5rem">2024 – 2028 (Expected) · Hamilton, Ontario</div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem">
+          <span class="chip" style="color:var(--accent);border-color:rgba(232,164,53,0.3)">Dean's List</span>
+          <span class="chip">Full-time</span>
+        </div>
+      </div>
+      <div>
+        <div class="coursework-title">Relevant Coursework</div>
+        <div class="course-grid">
+          <div class="course-item">Computing in Python</div>
+          <div class="course-item">Web Development &amp; Algorithms</div>
+          <div class="course-item">Software Design using Web Programming</div>
+          <div class="course-item">Computer Practices using Linux</div>
+          <div class="course-item">Calculus 2</div>
+          <div class="course-item">Discrete Mathematics</div>
+          
+        </div>
+     
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ============================================================
+     08 — CONTACT
+     ============================================================ -->
+<section id="contact">
+  <div class="section-wrap">
+    <div class="section-label">08 — Contact</div>
+    <h2 class="section-title">Let's Build Something</h2>
+    <div class="contact-grid">
+      <div class="contact-info fade-up">
+        <h3>Open to opportunities.</h3>
+        <p>I'm actively looking for Summer 2025 software engineering or AI/ML internships. Whether you have a position to discuss or just want to talk tech — my inbox is always open.</p>
+        <div class="social-links">
+          <!-- onclick copies email to clipboard -->
+          <a href="mailto:canjeevs@mcmaster.ca" class="social-link" onclick="copyEmail(event)">
+            <span class="s-icon">✉️</span>
+            <span class="s-label">canjeevs@mcmaster.ca</span>
+            <span class="s-arrow">→</span>
+          </a>
+          <a href="https://linkedin.com/in/Saharsh-Sukumar" class="social-link" target="_blank" rel="noopener">
+            <span class="s-icon">💼</span>
+            <span class="s-label">linkedin.com/in/Saharsh-Sukumar</span>
+            <span class="s-arrow">→</span>
+          </a>
+          <a href="https://github.com/Saharsh-S" class="social-link" target="_blank" rel="noopener">
+            <span class="s-icon">🐙</span>
+            <span class="s-label">github.com/Saharsh-S</span>
+            <span class="s-arrow">→</span>
+          </a>
+          <a href="https://docs.google.com/document/d/1Fa2pnSdd_PtIeFdOMQlTAI7cmPalbgep/edit?usp=sharing&rtpof=true&sd=true" class="social-link" target="_blank" rel="noopener">
+            <span class="s-icon">📝</span>
+            <span class="s-label">Resume</span>
+            <span class="s-arrow">→</span>
+          </a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-text">© 2025 Saharsh Sukumar · Built with ☕ and way too many Stack Overflow tabs</div>
+  <div class="footer-easter" onclick="easterEgg()" title="Click me...">[ secret ]</div>
+</footer>
+
+<!-- JavaScript -->
+<script src="main.js"></script>
+</body>
+</html>
